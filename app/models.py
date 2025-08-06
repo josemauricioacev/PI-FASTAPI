@@ -7,18 +7,19 @@ from datetime import datetime
 #USUARIOS
 class Usuario(Base):
     __tablename__ = "usuario"
+    
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String(45), nullable=False)
-    avatar = Column(LargeBinary, nullable=False)
-    correo = Column(String(60), nullable=False, unique=True)
-    contraseña = Column(String(50), nullable=False)
+    avatar = Column(LargeBinary)  # longblob
+    correo = Column(String(60), unique=True, nullable=False)
+    contrasena = Column(String(255))  # ← Cambiar de 'contraseña' a 'contrasena'
     fecha_creacion = Column(DateTime, nullable=False)
     status_id = Column(Integer, ForeignKey("status.id"), nullable=False)
-    telefono = Column(String(20), nullable=True)
-    pais_id = Column(Integer, ForeignKey("paises.id"), nullable=True)
-    direccion = Column(String(100), nullable=True)
-    genero_id = Column(Integer, ForeignKey("generos.id"), nullable=True)
-    fecha_nacimiento = Column(Date, nullable=True)
+    telefono = Column(String(20))
+    pais_id = Column(Integer, ForeignKey("paises.id"))
+    direccion = Column(String(100))
+    genero_id = Column(Integer, ForeignKey("generos.id"))
+    fecha_nacimiento = Column(Date)
 #USUARIOS
 
 

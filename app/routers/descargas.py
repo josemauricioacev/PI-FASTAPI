@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
-from .auth_utils import get_current_user
+# from app.auth_utils import get_current_user  # ← COMENTAR ESTA LÍNEA
 from sqlalchemy.orm import Session
 from app.conexion import get_db
 from app.models import Descarga, Usuario
@@ -20,8 +20,8 @@ def crear_descarga(
     id_app: int = Query(..., description="ID de la aplicación"),
     fecha: Optional[date] = Query(None, description="Fecha de descarga (auto si se omite)"),
     cantidad: int = Query(1, ge=1, description="Número de descargas"),
-    db: Session = Depends(get_db),
-    usuario: Usuario = Depends(get_current_user)
+    db: Session = Depends(get_db)
+    # usuario: Usuario = Depends(get_current_user)  # ← COMENTAR ESTA LÍNEA TAMBIÉN
 ):
     nueva = Descarga(
         id_app=id_app,
@@ -37,8 +37,8 @@ def actualizar_descarga(
     id_app: int = Query(..., description="Nuevo ID de aplicación"),
     fecha: Optional[date] = Query(None, description="Nueva fecha"),
     cantidad: int = Query(..., ge=1, description="Nueva cantidad"),
-    db: Session = Depends(get_db),
-    usuario: Usuario = Depends(get_current_user)
+    db: Session = Depends(get_db)
+    # usuario: Usuario = Depends(get_current_user)  # ← COMENTAR ESTA LÍNEA TAMBIÉN
 ):
     descarga_db = db.query(Descarga).filter_by(id_descarga=id_descarga).first()
     if not descarga_db:
@@ -53,8 +53,8 @@ def actualizar_descarga(
 @router.delete("/{id_descarga}")
 def eliminar_descarga(
     id_descarga: int = Path(..., description="ID de la descarga a eliminar"),
-    db: Session = Depends(get_db),
-    usuario: Usuario = Depends(get_current_user)
+    db: Session = Depends(get_db)
+    # usuario: Usuario = Depends(get_current_user)  # ← COMENTAR ESTA LÍNEA TAMBIÉN
 ):
     descarga = db.query(Descarga).filter_by(id_descarga=id_descarga).first()
     if not descarga:
