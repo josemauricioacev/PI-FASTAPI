@@ -15,8 +15,8 @@ from app.routers import (
 )
 
 app = FastAPI(
-    title="Lana App Store API",
-    description="API para gestión de tienda de aplicaciones",
+    title="SUSTAINITY API",
+    description="API",
     version="1.0.0"
 )
 
