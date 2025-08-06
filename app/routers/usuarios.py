@@ -3,9 +3,9 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from starlette import status as http_status
 from sqlalchemy.orm import Session
-from app.conexion import get_db
-from app.models import Usuario
-from app.schemas import UsuarioOut, UsuarioUpdate
+from conexion import get_db
+from models import Usuario
+from schemas import UsuarioOut, UsuarioUpdate
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, date
@@ -79,11 +79,22 @@ def actualizar_usuario(
     if not u:
         raise HTTPException(404, "Usuario no encontrado")
     update_data = datos.dict(exclude_unset=True)
+    # Si vienen cambios de contraseña, la hasheamos
     if "contraseña" in update_data:
         update_data["contraseña"] = pwd_context.hash(update_data["contraseña"])
+    # Validar unicidad de correo si se está actualizando
+    if "correo" in update_data:
+        existe = db.query(Usuario).filter(
+            Usuario.correo == update_data["correo"],
+            Usuario.id != id
+        ).first()
+        if existe:
+            raise HTTPException(400, "Correo ya registrado")
+    # Aplicar los cambios
     for campo, valor in update_data.items():
         setattr(u, campo, valor)
-    db.commit(); db.refresh(u)
+    db.commit()
+    db.refresh(u)
     return u
 
 @router.delete("/{id}")
@@ -128,4 +139,3 @@ def actualizar_mi_usuario(
         setattr(u, campo, valor)
     db.commit(); db.refresh(u)
     return u
-
