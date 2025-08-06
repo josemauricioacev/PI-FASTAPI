@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
 from sqlalchemy.orm import Session
-from conexion import get_db
-from models import Desarrollador
-from schemas import DesarrolladorOut
+from app.conexion import get_db
+from app.models import Desarrollador
+from app.schemas import DesarrolladorOut
 from datetime import datetime
 from typing import Optional
 from pydantic import EmailStr

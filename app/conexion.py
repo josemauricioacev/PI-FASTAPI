@@ -3,7 +3,9 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-load_dotenv()
+# Carga el .env usando la ruta absoluta de la carpeta actual
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path)
 
 DATABASE_URL = os.getenv("DB_URL")
 

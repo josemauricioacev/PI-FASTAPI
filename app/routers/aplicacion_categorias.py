@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
 from sqlalchemy.orm import Session
-from conexion import get_db
-from models import AppCategoria, App, Categoria  # ← Importar Categoria también
-from schemas import AppCategoriaOut
+from app.conexion import get_db
+from app.models import AppCategoria, App, Categoria  # ← Importar Categoria también
+from app.schemas import AppCategoriaOut
 
 router = APIRouter()
 

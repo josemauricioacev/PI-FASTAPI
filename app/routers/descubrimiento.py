@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
-from conexion import get_db
-from models import App, AppSeccion, Seccion, Descarga, Valoracion
-from schemas import AppOut
+from app.conexion import get_db
+from app.models import App, AppSeccion, Seccion, Descarga, Valoracion
+from app.schemas import AppOut
 from datetime import datetime, timedelta
 
 router = APIRouter()
@@ -51,7 +51,7 @@ def apps_por_seccion(id_seccion: int, limite: int = 20, db: Session = Depends(ge
 
 @router.get("/recomendaciones/{usuario_id}", response_model=list[AppOut])
 def recomendaciones_usuario(usuario_id: int, limite: int = 10, db: Session = Depends(get_db)):
-    from models import MisApp, AppCategoria
+    from app.models import MisApp, AppCategoria
     
     categorias_usuario = db.query(AppCategoria.categorias_id).join(
         MisApp, AppCategoria.app_id_app == MisApp.app_id_app

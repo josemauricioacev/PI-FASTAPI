@@ -1,95 +1,46 @@
+import os
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+# Importar todos los routers
+from app.routers import (
+    usuarios, aplicacion, categorias, seccion, 
+    desarrollador, status, paises, generos,
+    version_app, valoracion, notificaciones, 
+    mis_apps, descargas, busqueda, descubrimiento,
+    estadisticas, app_seccion, aplicacion_categorias,
+    apps_desarrollador
+)
 
 app = FastAPI(
     title="Lana App Store API",
+    description="API para gestión de tienda de aplicaciones",
+    version="1.0.0"
 )
 
-# Ajustar CORS y prefix de usuarios
-origins = [
-    "http://localhost:19006",
-    "http://localhost:8081",
-    "http://localhost:8000",
-]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # permitir todas las fuentes temporalmente
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-#USUARIOS
-from routers import usuarios
-app.include_router(
-    usuarios.router,
-    prefix="/usuarios",
-    tags=["Usuarios"]
-)
-
-#STATUS
-from routers import status
-app.include_router(status.router, tags=["Status"])
-
-#SECCIONES
-from routers import seccion
-app.include_router(seccion.router, prefix="/secciones", tags=["Secciones"])
-
-#CATEGORÍAS
-from routers import categorias
+# Incluir todos los routers con sus prefijos
+app.include_router(usuarios.router, prefix="/usuarios", tags=["Usuarios"])
+app.include_router(aplicacion.router, prefix="/aplicaciones", tags=["Aplicaciones"])
 app.include_router(categorias.router, prefix="/categorias", tags=["Categorías"])
-
-# PAÍSES
-from routers import paises
-app.include_router(paises.router, prefix="/paises", tags=["Países"])
-
-# GÉNEROS
-from routers import generos
-app.include_router(generos.router, prefix="/generos", tags=["Géneros"])
-
-#DESARROLLADORES
-from routers import desarrollador
+app.include_router(seccion.router, prefix="/secciones", tags=["Secciones"])
 app.include_router(desarrollador.router, prefix="/desarrolladores", tags=["Desarrolladores"])
-
-#APLICACIONES
-from routers import aplicacion
-app.include_router(aplicacion.router, prefix="/aplicacion", tags=["Aplicacion"])
-app.include_router(aplicacion.router, prefix="/apps", tags=["Apps"])
-
-#APLICACIONES CATEGORÍAS
-from routers import aplicacion_categorias, app_seccion
-app.include_router(aplicacion_categorias.router, prefix="/api/app-categorias", tags=["App-Categorías"])
-app.include_router(app_seccion.router, prefix="/api/app-secciones", tags=["App-Secciones"])
-
-#APLICACIONES DESARROLLADOR
-from routers import apps_desarrollador
+app.include_router(status.router, prefix="/status", tags=["Status"])
+app.include_router(paises.router, prefix="/paises", tags=["Países"])
+app.include_router(generos.router, prefix="/generos", tags=["Géneros"])
+app.include_router(version_app.router, prefix="/versiones", tags=["Versiones"])
+app.include_router(valoracion.router, prefix="/valoraciones", tags=["Valoraciones"])
+app.include_router(notificaciones.router, prefix="/notificaciones", tags=["Notificaciones"])
+app.include_router(mis_apps.router, prefix="/mis-apps", tags=["Mis Apps"])
+app.include_router(descargas.router, prefix="/descargas", tags=["Descargas"])
+app.include_router(busqueda.router, prefix="/busqueda", tags=["Búsqueda"])
+app.include_router(descubrimiento.router, prefix="/descubrimiento", tags=["Descubrimiento"])
+app.include_router(estadisticas.router, prefix="/estadisticas", tags=["Estadísticas"])
+app.include_router(app_seccion.router, prefix="/app-seccion", tags=["App-Sección"])
+app.include_router(aplicacion_categorias.router, prefix="/app-categorias", tags=["App-Categorías"])
 app.include_router(apps_desarrollador.router, prefix="/apps-desarrollador", tags=["Apps-Desarrollador"])
 
-#APLICACIONES DESCARGAS
-from routers import descargas
-app.include_router(descargas.router, prefix="/descargas", tags=["Descarga"])
-
-#MIS APPS
-from routers import mis_apps
-app.include_router(mis_apps.router, prefix="/api", tags=["Mis Apps"])
-
-#NOTIFICACIONES
-from routers import notificaciones
-app.include_router(notificaciones.router, prefix="/api", tags=["Notificaciones"])
-
-#VALORACIONES
-from routers import valoracion
-app.include_router(valoracion.router, prefix="/api", tags=["Valoraciones"])
-
-#VERSIÓN
-from routers import version_app
-app.include_router(version_app.router, prefix="/api", tags=["Versiones"])
-
-# Temporalmente comentados hasta crear los archivos
-from routers import busqueda
-app.include_router(busqueda.router, prefix="/api", tags=["Búsqueda"])
-
-from routers import estadisticas
-app.include_router(estadisticas.router, prefix="/api", tags=["Estadísticas"])
-
-from routers import descubrimiento
-app.include_router(descubrimiento.router, prefix="/api", tags=["Descubrimiento"])
+@app.get("/")
+def root():
+    return {"message": "Lana App Store API funcionando correctamente"}

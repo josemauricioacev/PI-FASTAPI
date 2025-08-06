@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
 from sqlalchemy.orm import Session
-from conexion import get_db
-from models import Genero
-from schemas import GeneroCreate, GeneroOut
+from app.conexion import get_db
+from app.models import Genero
+from app.schemas import GeneroCreate, GeneroOut
 
 router = APIRouter()
 

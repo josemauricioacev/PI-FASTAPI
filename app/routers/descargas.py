@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
 from .auth_utils import get_current_user
 from sqlalchemy.orm import Session
-from conexion import get_db
-from models import Descarga, Usuario
-from schemas import DescargaOut
+from app.conexion import get_db
+from app.models import Descarga, Usuario
+from app.schemas import DescargaOut
 from datetime import date
 from typing import Optional
 

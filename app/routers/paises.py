@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Path
 from sqlalchemy.orm import Session
-from conexion import get_db
-from models import Pais
-from schemas import PaisCreate, PaisOut
+from app.conexion import get_db
+from app.models import Pais
+from app.schemas import PaisCreate, PaisOut
 
 router = APIRouter()
 

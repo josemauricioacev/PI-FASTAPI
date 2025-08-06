@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, LargeBinary, Text, DateTime, SmallInteger, BigInteger, Date, Boolean
-from conexion import Base
+from app.conexion import Base
 from sqlalchemy.dialects.mysql import BIGINT 
 from datetime import datetime
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models import MisApp
-from schemas import MisAppCreate, MisAppOut
-from conexion import get_db
+from app.models import MisApp
+from app.schemas import MisAppCreate, MisAppOut
+from app.conexion import get_db
 # Removed authentication dependency import
 
 router = APIRouter()

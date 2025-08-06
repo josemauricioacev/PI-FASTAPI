@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from models import Notificacion
-from schemas import NotificacionCreate, NotificacionOut
+from app.models import Notificacion
+from app.schemas import NotificacionCreate, NotificacionOut
 from datetime import datetime
-from conexion import get_db
+from app.conexion import get_db
 
 router = APIRouter()
 

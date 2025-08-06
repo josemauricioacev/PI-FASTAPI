@@ -3,9 +3,9 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from starlette import status as http_status
 from sqlalchemy.orm import Session
-from conexion import get_db
-from models import Usuario
-from schemas import UsuarioOut, UsuarioUpdate
+from app.conexion import get_db
+from app.models import Usuario
+from app.schemas import UsuarioOut, UsuarioUpdate
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, date
